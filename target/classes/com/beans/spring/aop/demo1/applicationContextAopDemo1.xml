@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- Spring的AOP编写XML方式 -->
+	<!-- 1.创建切面对象 -->
+    <bean id="customerService" class="com.beans.spring.aop.demo1.service.impl.CustomerServiceImpl"/>
+    <!-- 2.创建切面类对象 -->
+    <bean id="myAspect1" class="com.beans.spring.aop.demo1.apsect.MyApsect"></bean>
+    <!-- 3.配置AOP切面 -->
+    <aop:config>
+    	<!-- 切面=通知+切入点 -->
+    	<aop:aspect ref="myAspect1">
+    		<aop:before method="log" pointcut-ref="pt"/>
+    		<aop:pointcut expression="execution(public void com.beans.spring.aop.demo1.service.impl.CustomerServiceImpl.*())" id="pt"/>
+    	</aop:aspect>
+    </aop:config>
+</beans>

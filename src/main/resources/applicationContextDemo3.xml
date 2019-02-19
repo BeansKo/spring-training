@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+		<!-- 1.依赖注入：构造方法方式  index 参数索引，从0开始 -->
+		<!-- <bean id="customerDao" class="com.beans.spring.ioc.id.dao.impl.CustomerDaoImpl"></bean>
+		    <bean id="customerService" class="com.beans.spring.ioc.id.service.impl.CustomerServiceImpl">
+		    	<constructor-arg index="0" ref="customerDao"></constructor-arg>
+		    </bean> -->
+    
+	    <!-- 2.setter方法注入 -->
+	    <!-- <bean id="customerDao" class="com.beans.spring.ioc.id.dao.impl.CustomerDaoImpl"></bean>
+	    	<bean id="customerService" class="com.beans.spring.ioc.id.service.impl.CustomerServiceImpl">
+	    		<property name="customerDao" ref="customerDao"></property> 	
+	    	</bean> -->
+    
+    	<!-- 3.p名称空间注入(基于setter方法) -->
+        <!-- <bean id="customerDao" class="com.beans.spring.ioc.id.dao.impl.CustomerDaoImpl" 
+	    	p:name="frank"></bean>
+	    <bean id="customerService" class="com.beans.spring.ioc.id.service.impl.CustomerServiceImpl"
+	    	p:CustomerDao-ref="customerDao">
+	    </bean> -->
+    
+    	<!-- 4.SPEL表达式注入，可以使用在构造方法和setter方法上面 -->
+		<!-- <bean id="customerDao" class="com.beans.spring.ioc.id.dao.impl.CustomerDaoImpl">
+	    	<property name="name" value="#{'tom'}"></property>
+	    </bean>
+	    <bean id="customerService" class="com.beans.spring.ioc.id.service.impl.CustomerServiceImpl">
+			<property name="customerDao" value="#{customerDao}"></property>
+			<constructor-arg index="0" value="#{customerDao}"></constructor-arg>
+	    </bean> -->
+	    
+	    <!-- 注入不同的数据类型 -->
+	    <bean id="c1" class="com.beans.spring.ioc.id.domain.Customer">
+	    	<property name="name">
+	    		<value>frank</value>
+	    	</property>
+	    	<property name="gender" value="男"></property>
+	    </bean>
+	    <bean id="c2" class="com.beans.spring.ioc.id.domain.Customer">
+	    	<property name="name">
+	    		<value>frank2</value>
+	    	</property>
+	    	<property name="gender" value="男2"></property>
+	    </bean>
+	    <bean id="c3" class="com.beans.spring.ioc.id.domain.Customer">
+	    	<property name="name">
+	    		<value>frank3</value>
+	    	</property>
+	    	<property name="gender" value="男3"></property>
+	    </bean>
+	    <bean id="customerService" class="com.beans.spring.ioc.id.service.impl.CustomerServiceImpl">
+	    	<!-- 普通类型 -->
+	    	<property name="gender" value="jack"></property>
+	    	<!-- JavaBean数据类型 -->
+	    	<property name="customer">
+	    		<ref bean="c1"></ref>
+	    	</property>
+	    	<!-- 数组类型 -->
+	    	<property name="addresses">
+	    		<array>
+	    			<value>北京</value>
+	    			<value>上海</value>
+	    		</array>
+	    	</property>
+	    	<!-- List集合 -->
+	    	<property name="customerList">
+	    		<list>
+	    			<ref bean="c1"></ref>
+	    			<ref bean="c2"></ref>
+	    			<ref bean="c3"></ref>
+	    		</list>
+	    	</property>
+	    	<!-- Map集合 -->
+	    	<property name="customerMap">
+	    		<map>
+	    			<entry key="001" value-ref="c1"></entry>
+	    			<entry key="002" value-ref="c2"></entry>
+	    			<entry key="003" value-ref="c3"></entry>
+	    		</map>
+	    	</property>
+	    	<!-- Properties -->
+	    	<property name="customerProp">
+	    		<props>
+	    			<prop key="01">frank1</prop>
+	    			<prop key="02">frank2</prop>
+	    		</props>
+	    	</property>
+	    </bean>
+</beans>

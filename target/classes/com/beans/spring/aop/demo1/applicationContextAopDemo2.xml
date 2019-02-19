@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+    	http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean id="customerService" class="com.beans.spring.aop.demo1.service.impl.CustomerServiceImpl"/>
+    <bean id="myAspect1" class="com.beans.spring.aop.demo1.apsect.MyApsect"></bean>
+    <aop:config>
+    	<aop:aspect ref="myAspect1">
+    		<aop:before method="log" pointcut-ref="pt"/>
+    		<!-- 切入点表达式语法
+    			1.execution():代表切入方式，固定语法
+    			2.public： 方法的修饰符号，通常为public方法
+    			3.void：方法的返回值类型，可以使用通配符：*
+    			4.com.beans.aop.demo1.service.impl：类所在的包
+    				4.1.可以使用通配符：*，*只能匹配一级目录
+    				4.2.可以使用*..*匹配任意级目录
+    			5.CustomerServiceImpl：类名称
+    				5.1.可以使用通配符：*（匹配任意字符）*ServiceImpl
+   				6.save()：代表方法
+   					6.1.可以使用通配符：*（匹配任意字符）
+   				7.方法的参数,java.lang.Integer代表参数为Integer的方法
+   					7.1.可以使用通配符：..(匹配任何参数类型的方法)
+    		 -->
+    		<aop:pointcut expression="execution(public * com.beans.spring.aop.demo1.*..*.*ServiceImpl.*(java.lang.Integer))" id="pt"/>
+    	</aop:aspect>
+    </aop:config>
+</beans>
